@@ -10,7 +10,7 @@ export const SignIn = ({ setUser }) => {
 
     });
     const navigate = useNavigate()
-    const handleSignUp = async () => {
+    const handleSignin = async () => {
         try {
             // Call to the sign up service, and log in the user automatically
             console.dir("handle sign up data " + signInData)
@@ -21,6 +21,7 @@ export const SignIn = ({ setUser }) => {
             }
             console.log(newUser);
             setUser(newUser.user);
+            navigate("/")
 
         } catch (error) {
             console.log(error)
@@ -36,12 +37,11 @@ export const SignIn = ({ setUser }) => {
 
     const handleSubmitForm = (evt) => {
         evt.preventDefault();
-        handleSignUp();
+        handleSignin();
         setSignInData({
              username: '', 
              password: '', 
         });
-        navigate("/")
 
     };
     return (

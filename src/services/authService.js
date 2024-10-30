@@ -13,19 +13,24 @@ export const signUp = async (formData) => {
         console.log(data);
         return data
     } catch (err) {
-        console.log(err);
+        // console.log(err.response.data);
+        return err.response.data
     }
 };
 
 export const signIn = async (formData) => {
-    // Sign up a user
-    const { data } = await axios.post(`${BASE_URL}/signin`, formData)
-
-    // Set the token to local storage
-    if (data.token) {
-        setToken(data.token)
+    try {
+        // Sign up a user
+        const { data } = await axios.post(`${BASE_URL}/signin`, formData)
+    
+        // Set the token to local storage
+        if (data.token) {
+            setToken(data.token)
+        }
+        console.log(data);
+        return data
+    } catch (error) {
+        return error.response.data
     }
-    console.log(data);
-    return data
 }
 

@@ -19,7 +19,7 @@ export const Header = ({ user, setUser }) => {
 
     return (
         <header className={styles.header}>
-            <h1>Vault</h1>
+            <h1><Link to={"/"}>Vault</Link></h1>
             {user && <span className={styles.user}>Welcome, {user.username}!</span>}
             <button className={styles.hamburger} onClick={toggleMenu}>
                 <span></span>
@@ -29,11 +29,12 @@ export const Header = ({ user, setUser }) => {
             <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ''}`} onClick={toggleMenu}></div>
             <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
                 <ul>
-                    <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
                     {user ? (
                         <>
+                            <li><Link to="/dashboard" onClick={() => setMenuOpen(false)}>Home</Link></li>
                             <li><Link to="/expenses" onClick={() => setMenuOpen(false)}>Expenses</Link></li>
                             <li><Link to="/addExpense" onClick={() => setMenuOpen(false)}>Add Expenses</Link></li>
+                            <li><Link to="/budget/new" onClick={() => setMenuOpen(false)}>Add Budget</Link></li>
                             <li><Link to="/" onClick={() => { handleSignOut(); setMenuOpen(false); }}>Sign Out</Link></li>
                         </>
                     ) : (
