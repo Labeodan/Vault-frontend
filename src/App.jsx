@@ -28,7 +28,6 @@ const App = () => {
   }, []);
 
   return (<>
-    <h2>Current user: {(user ? user.username : "")}</h2>
     <Header user={user} setUser={setUser}></Header>
     <Routes>
       {/* User routes */}
