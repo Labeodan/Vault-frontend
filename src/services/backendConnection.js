@@ -36,5 +36,16 @@ const singleTransaction = async (id) => {
     }
 }
 
+const editTransaction = async (id, formData) => {
+    try {
 
-export { getTransactions, createTransaction, singleTransaction };
+        const { data } = await axios.put(`${BASE_URL}/transactions/${id}`, formData);
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export { getTransactions, createTransaction, singleTransaction, editTransaction };

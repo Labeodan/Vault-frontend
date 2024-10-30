@@ -14,7 +14,7 @@ import { SignIn } from './pages/SignIn/SignIn';
 import { Header } from './components/Header/Header';
 import { TransactionList } from './components/transactions/TransactionList/TransactionList';
 import { TransactionForm } from './components/transactions/TransactionForm/TransactionForm';
-
+import { TransactionEdit } from './components/transactions/TransactionEdit/TransactionEdit';
 const App = () => {
   const [transactions, setTransactions] = useState([]);
   const [budgets, setBudgets] = useState([]);
@@ -44,8 +44,8 @@ const App = () => {
 
       {/* Transaction routes */}
       <Route path="/expenses" element={<TransactionList user={user} />} />
-      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
-      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
+      <Route path="/expenses/new" element={<TransactionForm user={user} />} />
+      <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
     </Routes>
   </>);
 };

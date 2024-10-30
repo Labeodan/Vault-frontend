@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { editTransaction,singleTransaction } from '../../../services/backendConnection';
+import { useParams } from 'react-router';
+import { editTransaction, singleTransaction } from '../../../services/backendConnection';
 export const TransactionEdit = (user) => {
+    const params = useParams();
+    const transactionID = params.transactionId;
 
     const [transactionData, setTransactionData] = useState({
         name: '',
-        type: "",
+        type: "Expense",
         amount: "",
-        category:"",//currently sets transport category by default 
+        category: "Transport",//currently sets transport category by default 
         //owner: user.user._id
     });
 
@@ -17,19 +20,40 @@ export const TransactionEdit = (user) => {
     const handleSubmitForm = async (evt) => {
         evt.preventDefault();
         setTransactionData({ ...transactionData, owner: user.user._id });
-        const newTransaction = await createTransaction(transactionData);
+        const newTransaction = await editTransaction(transactionID, transactionData);
         console.log(newTransaction);
+
+        //update values in form after the update
+        const fetchTransaction = async () => {
+
+            const expense = await singleTransaction(transactionID);//call get single transaction by id
+            console.log(expense);
+            setTransactionData({
+                name: expense.name,
+                type: expense.type,
+                amount: expense.amount,
+                category: 'Transport',
+            })
+        };
+        // invoke the function
+        fetchTransaction();
     };
 
     useEffect(() => {
         // create a new async function
-        const fetchExpenses = async () => {
-            const expense = await financeService.singleTransaction(id);//call the transactions list
+        const fetchTransaction = async () => {
+
+            const expense = await singleTransaction(transactionID);//call get single transaction by id
             console.log(expense);
-            setTransactions(...[expense]);
+            setTransactionData({
+                name: expense.name,
+                type: expense.type,
+                amount: expense.amount,
+                category: 'Transport',
+            })
         };
         // invoke the function
-        fetchExpenses();
+        fetchTransaction();
     }, []);
 
     return (
@@ -59,10 +83,11 @@ export const TransactionEdit = (user) => {
                         />
                     </div>
                     <div>
+
                         <label  > Type:  </label>
-                        <input type="radio" id="Expense" name="type" value="Expense" />
+                        <input type="radio" id="Expense" name="type" value="Expense" checked={transactionData.type == "Expense" ? 'checked' : ""} />
                         <label htmlFor="Expense">Expense</label>
-                        <input type="radio" id="Income" name="type" value="Income" />
+                        <input type="radio" id="Income" name="type" value="Income" checked={transactionData.type == "Expense" ? '' : "checked"} />
                         <label htmlFor="Income">Income</label>
 
                     </div>
@@ -70,11 +95,8 @@ export const TransactionEdit = (user) => {
                         <label htmlFor="amount"> Category: to be implemented </label>
 
                     </div>
-
                 </div>
-
-
-                <button type="submit">Create</button>
+                <button type="submit">Edit</button>
             </form>
         </main>
     )
