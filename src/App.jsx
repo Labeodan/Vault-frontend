@@ -5,19 +5,15 @@ import { Route, Routes } from 'react-router-dom';
 //services
 import * as financeService from './services/backendConnection';
 import * as authService from './services/authService';
-import { getUser, removeToken } from './utils/auth';
+import { getUser } from './utils/auth';
 
 //components
 import { SignUp } from './pages/SignUp/SignUp';
 import { SignIn } from './pages/SignIn/SignIn';
-// import { SignOutElement } from './pages/SignOutComponent/signOutComponent';
 import { Header } from './components/Header/Header';
-import { TransactionList } from './components/transactions/TransactionList/TransactionList';
+
 
 const App = () => {
-  const [transactions, setTransactions] = useState([]);
-  const [budgets, setBudgets] = useState([]);
-  const [tags, setTags] = useState([]);
   const [user, setUser] = useState(getUser());
 
   useEffect(() => {

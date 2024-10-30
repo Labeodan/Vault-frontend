@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { signIn } from '../../services/authService';
 import styles from './SignIn.module.scss'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 export const SignIn = ({ setUser }) => {
-
     const [signInData, setSignInData] = useState({
         username: '',
         password: '',
 
     });
-
+    const navigate = useNavigate()
     const handleSignUp = async () => {
         try {
             // Call to the sign up service, and log in the user automatically
@@ -40,7 +39,10 @@ export const SignIn = ({ setUser }) => {
         handleSignUp();
         setSignInData({
              username: '', 
-             password: '', });
+             password: '', 
+        });
+        navigate("/")
+
     };
     return (
         <main className={styles.container}>
