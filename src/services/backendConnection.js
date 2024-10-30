@@ -13,9 +13,9 @@ const index = async () => {
 };
 
 //transactions requests
-const getTransactions = async ( ) => {
+const getTransactions = async () => {
     try {
-         
+
         const { data } = await axios.get(`${BASE_URL}/transactions`);
 
         return data;
@@ -24,4 +24,16 @@ const getTransactions = async ( ) => {
     }
 }
 
-export { index, getTransactions };
+const createTransaction = async (formData) => {
+    try {
+
+        const { data } = await axios.post(`${BASE_URL}/transactions`, formData);
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export { index, getTransactions, createTransaction };

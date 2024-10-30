@@ -13,6 +13,7 @@ import { SignIn } from './pages/SignIn/SignIn';
 // import { SignOutElement } from './pages/SignOutComponent/signOutComponent';
 import { Header } from './components/Header/Header';
 import { TransactionList } from './components/transactions/TransactionList/TransactionList';
+import { TransactionForm } from './components/transactions/TransactionForm/TransactionForm';
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
@@ -42,8 +43,8 @@ const App = () => {
       <Route path="/auth/signup" element={<SignUp authService={authService} user={user} setUser={setUser} />} />
 
       {/* Transaction routes */}
-      <Route path="/expenses" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
-
+      <Route path="/expenses" element={<TransactionList user={user} />} />
+      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
     </Routes>
   </>);
 };
