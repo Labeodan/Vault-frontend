@@ -17,7 +17,7 @@ const App = () => {
   const [transactions, setTransactions] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const [tags, setTags] = useState([]);
-  const [user, setUser] = useState(getUser);
+  const [user, setUser] = useState(getUser());
 
   useEffect(() => {
     // create a new async function
@@ -31,7 +31,7 @@ const App = () => {
   }, []);
 
   return (<>
-    <h2>Current user: {(user ? user.username : "none")}</h2>
+    <h2>Current user: {(user ? user.username : "")}</h2>
     <Header user={user} setUser={setUser}></Header>
     <Routes>
       {/* User routes */}
