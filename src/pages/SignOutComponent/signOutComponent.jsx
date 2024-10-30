@@ -1,4 +1,4 @@
-import { removeToken } from "../../utils/auth";
+import { removeToken } from "../../src/utils/auth";
 import { useNavigate } from "react-router";
 export const SignOutElement = ({ setUser }) => {
     const handleSignOut = () => {

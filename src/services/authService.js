@@ -3,7 +3,7 @@ import { setToken } from '../utils/auth' //contains functions to deal with the l
 
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/auth`;
 
-const signUp = async (formData) => {
+export const signUp = async (formData) => {
     try {
         const { data } = await axios.post(`${BASE_URL}/signup`, formData)
 
@@ -33,4 +33,3 @@ export const signIn = async (formData) => {
     return data
 }
 
-export { signUp };

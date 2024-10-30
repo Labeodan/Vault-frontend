@@ -8,9 +8,9 @@ import * as authService from './services/authService';
 import { getUser, removeToken } from './utils/auth';
 
 //components
-import { SignUpForm } from './components/SignUpForm/signUpForm';
-import { SignInForm } from './components/auth/SignInFrom/signInForm';
-import { SignOutElement } from './components/SignOutComponent/signOutComponent';
+import { SignUp } from './pages/SignUp/SignUp';
+import { SignIn } from './pages/SignIn/SignIn';
+// import { SignOutElement } from './pages/SignOutComponent/signOutComponent';
 import { Header } from './components/Header/Header';
 
 const App = () => {
@@ -31,17 +31,17 @@ const App = () => {
   }, []);
 
   return (<>
-    <h2>Current user: {(user ? user.username : "none")}</h2>
+    <h2>Current user: {(user ? user.username : "")}</h2>
     <Header user={user} setUser={setUser}></Header>
     <Routes>
       {/* User routes */}
-      <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} />
+      {/* <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} /> */}
       <Route path="/" element={<h2>Landing page</h2>} />
-      <Route path="/auth/signin" element={<SignInForm authService={authService} user={user} setUser={setUser} />} />
-      <Route path="/auth/signup" element={<SignUpForm authService={authService} user={user} setUser={setUser} />} />
+      <Route path="/auth/signin" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
+      <Route path="/auth/signup" element={<SignUp authService={authService} user={user} setUser={setUser} />} />
 
       {/* Transaction routes */}
-      <Route path="/expenses" element={<SignInForm authService={authService} user={user} setUser={setUser} />} />
+      <Route path="/expenses" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
 
     </Routes>
   </>);
