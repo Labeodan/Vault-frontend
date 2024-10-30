@@ -10,8 +10,8 @@ import { getUser, removeToken } from './utils/auth';
 //components
 import { SignUpForm } from './components/SignUpForm/signUpForm';
 import { SignInForm } from './components/auth/SignInFrom/signInForm';
-import { SignOutElement } from './components/SignOutComponent/signOutComponent';
 import { Header } from './components/Header/Header';
+import { TransactionList } from './components/transactions/TransactionList/TransactionList';
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
@@ -35,13 +35,12 @@ const App = () => {
     <Header user={user} setUser={setUser}></Header>
     <Routes>
       {/* User routes */}
-      <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} />
       <Route path="/" element={<h2>Landing page</h2>} />
       <Route path="/auth/signin" element={<SignInForm authService={authService} user={user} setUser={setUser} />} />
       <Route path="/auth/signup" element={<SignUpForm authService={authService} user={user} setUser={setUser} />} />
 
       {/* Transaction routes */}
-      <Route path="/expenses" element={<SignInForm authService={authService} user={user} setUser={setUser} />} />
+      <Route path="/expenses" element={<TransactionList user={user} />} />
 
     </Routes>
   </>);

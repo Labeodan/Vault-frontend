@@ -7,13 +7,11 @@ const signUp = async (formData) => {
     try {
         const { data } = await axios.post(`${BASE_URL}/signup`, formData)
 
-
         if (data.token) {
             setToken(data.token)
         }
         console.log(data);
         return data
-
     } catch (err) {
         console.log(err);
     }
@@ -21,7 +19,6 @@ const signUp = async (formData) => {
 
 export const signIn = async (formData) => {
     // Sign up a user
-    console.log("front end form data " + formData);
     const { data } = await axios.post(`${BASE_URL}/signin`, formData)
 
     // Set the token to local storage
@@ -29,7 +26,6 @@ export const signIn = async (formData) => {
         setToken(data.token)
     }
     console.log(data);
-
     return data
 }
 
