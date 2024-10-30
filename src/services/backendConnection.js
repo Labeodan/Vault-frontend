@@ -37,4 +37,4 @@ const singleTransaction = async (id) => {
 }
 
 
-export { index, getTransactions, createTransaction };
+export {  getTransactions, createTransaction };
