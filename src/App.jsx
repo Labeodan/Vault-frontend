@@ -45,6 +45,7 @@ const App = () => {
       {/* Transaction routes */}
       <Route path="/expenses" element={<TransactionList user={user} />} />
       <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
+      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
     </Routes>
   </>);
 };

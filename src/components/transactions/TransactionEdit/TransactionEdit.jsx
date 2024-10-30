@@ -4,9 +4,9 @@ export const TransactionEdit = (user) => {
 
     const [transactionData, setTransactionData] = useState({
         name: '',
-        type: "Expense",
+        type: "",
         amount: "",
-        category:"Transport",//currently sets transport category by default 
+        category:"",//currently sets transport category by default 
         //owner: user.user._id
     });
 
@@ -24,9 +24,9 @@ export const TransactionEdit = (user) => {
     useEffect(() => {
         // create a new async function
         const fetchExpenses = async () => {
-            const expenses = await financeService.singleTransaction(id);//call the transactions list
-            console.log(expenses);
-            setTransactions(...[expenses]);
+            const expense = await financeService.singleTransaction(id);//call the transactions list
+            console.log(expense);
+            setTransactions(...[expense]);
         };
         // invoke the function
         fetchExpenses();
