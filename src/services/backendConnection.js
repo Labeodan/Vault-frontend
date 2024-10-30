@@ -46,6 +46,15 @@ const editTransaction = async (id, formData) => {
         console.log(error);
     }
 }
+const deleteTransaction = async (id) => {
+    try {
 
+        const { data } = await axios.delete(`${BASE_URL}/transactions/${id}`);
 
-export { getTransactions, createTransaction, singleTransaction, editTransaction };
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction };
