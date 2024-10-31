@@ -56,5 +56,6 @@ const deleteTransaction = async (id) => {
         console.log(error);
     }
 }
-
-export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction };
+ 
+export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction,getTransactions, createTransaction };
+ 

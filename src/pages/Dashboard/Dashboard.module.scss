@@ -1,0 +1,108 @@
+.dashboard {
+    padding: 20px;
+    color: #333;
+    font-family: Arial, sans-serif;
+  
+    .header {
+      h1 {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+  
+    .summary {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+  
+      .summaryCard {
+        background-color: #f8f8f8;
+        padding: 20px;
+        border-radius: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+  
+        h2 {
+          font-size: 1.5rem;
+        }
+  
+        .amount {
+          font-size: 2.5rem;
+          font-weight: bold;
+          margin: 10px 0;
+        }
+  
+        .button {
+          background-color: #333;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #555;
+          }
+        }
+      }
+    }
+  
+    .charts {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+  
+      .chart {
+        background-color: #f8f8f8;
+        padding: 20px;
+        border-radius: 10px;
+        flex: 1;
+  
+        h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+        }
+  
+        .chartPlaceholder {
+          background-color: #e0e0e0;
+          height: 150px;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #999;
+        }
+      }
+    }
+  
+    .transactionCategories {
+      margin-top: 20px;
+  
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+  
+      .categoryGrid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+  
+        .categoryCard {
+          background-color: #f0f0f0;
+          padding: 15px;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+  

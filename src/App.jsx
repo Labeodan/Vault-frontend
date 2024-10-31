@@ -5,20 +5,23 @@ import { Route, Routes } from 'react-router-dom';
 //services
 import * as financeService from './services/backendConnection';
 import * as authService from './services/authService';
-import { getUser, removeToken } from './utils/auth';
+import { getUser } from './utils/auth';
 
 //components
 import { SignUp } from './pages/SignUp/SignUp';
 import { SignIn } from './pages/SignIn/SignIn';
-// import { SignOutElement } from './pages/SignOutComponent/signOutComponent';
 import { Header } from './components/Header/Header';
 import { TransactionList } from './components/transactions/TransactionList/TransactionList';
 import { TransactionForm } from './components/transactions/TransactionForm/TransactionForm';
 import { TransactionEdit } from './components/transactions/TransactionEdit/TransactionEdit';
+
+import BudgetCreate from './pages/BudgetCreate/BudgetCreate';
+import BudgetUpdate from './pages/BudgetUpdate/BudgetUpdate';
+import Dashboard from './pages/Dashboard/Dashboard';
+import LandingPage from './pages/LandingPage/LandingPage';
+
+ 
 const App = () => {
-  const [transactions, setTransactions] = useState([]);
-  const [budgets, setBudgets] = useState([]);
-  const [tags, setTags] = useState([]);
   const [user, setUser] = useState(getUser());
 
   useEffect(() => {
@@ -33,12 +36,12 @@ const App = () => {
   }, []);
 
   return (<>
-    <h2>Current user: {(user ? user.username : "")}</h2>
     <Header user={user} setUser={setUser}></Header>
     <Routes>
       {/* User routes */}
       {/* <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} /> */}
-      <Route path="/" element={<h2>Landing page</h2>} />
+      <Route path="/" element={<LandingPage  user={user}/>} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/auth/signin" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
       <Route path="/auth/signup" element={<SignUp authService={authService} user={user} setUser={setUser} />} />
 
@@ -46,6 +49,12 @@ const App = () => {
       <Route path="/expenses" element={<TransactionList user={user} />} />
       <Route path="/expenses/new" element={<TransactionForm user={user} />} />
       <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
+      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
+
+      {/* Budget Routes */}
+      <Route path="/budget/new" element={<BudgetCreate />} />
+      <Route path="/budget/:budgetId" element={<BudgetUpdate />} />
+ 
     </Routes>
   </>);
 };
