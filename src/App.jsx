@@ -1,9 +1,8 @@
 // packages import
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 //services
-import * as financeService from './services/backendConnection';
 import * as authService from './services/authService';
 import { getUser } from './utils/auth';
 

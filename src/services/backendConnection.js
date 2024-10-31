@@ -1,6 +1,6 @@
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}`;
 import axios from '../services/interceptors'
-import { getToken } from "../utils/auth";
+// import { getToken } from "../utils/auth";
 
 //transactions requests
 const getTransactions = async () => {
@@ -11,6 +11,7 @@ const getTransactions = async () => {
         return data;
     } catch (error) {
         console.log(error);
+        return error.response
     }
 }
 
@@ -22,6 +23,7 @@ const createTransaction = async (formData) => {
         return data;
     } catch (error) {
         console.log(error);
+        return error.response
     }
 }
 
@@ -33,6 +35,7 @@ const singleTransaction = async (id) => {
         return data;
     } catch (error) {
         console.log(error);
+        return error.response
     }
 }
 
@@ -44,6 +47,7 @@ const editTransaction = async (id, formData) => {
         return data;
     } catch (error) {
         console.log(error);
+        return error.response
     }
 }
 const deleteTransaction = async (id) => {
@@ -54,9 +58,10 @@ const deleteTransaction = async (id) => {
         return data;
     } catch (error) {
         console.log(error);
+        return error.response
     }
 }
  
-export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction,getTransactions, createTransaction };
+export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction,};
  
 

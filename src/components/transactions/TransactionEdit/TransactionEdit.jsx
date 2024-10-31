@@ -1,68 +1,68 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { editTransaction, singleTransaction } from '../../../services/backendConnection';
-export const TransactionEdit = (user) => {
+
+export const TransactionEdit = ({ user }) => {
     const params = useParams();
     const transactionID = params.transactionId;
+    const navigate = useNavigate();
 
     const [transactionData, setTransactionData] = useState({
         name: '',
         type: "Expense",
         amount: "",
-        category: "Transport",//currently sets transport category by default 
-        //owner: user.user._id
+        category: "Transport", // Sets "Transport" as default category
     });
 
+    const [error, setError] = useState(null);
+
     const handleChange = (evt) => {
-        console.log(transactionData);
         setTransactionData({ ...transactionData, [evt.target.name]: evt.target.value });
     };
+
     const handleSubmitForm = async (evt) => {
         evt.preventDefault();
-        setTransactionData({ ...transactionData, owner: user.user._id });
-        const newTransaction = await editTransaction(transactionID, transactionData);
-        console.log(newTransaction);
+        setError(null); // Reset error before submission
 
-        //update values in form after the update
-        const fetchTransaction = async () => {
+        const updatedTransaction = await editTransaction(transactionID, {
+            ...transactionData,
+            owner: user._id,
+        });
 
-            const expense = await singleTransaction(transactionID);//call get single transaction by id
-            console.log(expense);
-            setTransactionData({
-                name: expense.name,
-                type: expense.type,
-                amount: expense.amount,
-                category: 'Transport',
-            })
-        };
-        // invoke the function
-        fetchTransaction();
+        // Check if the update request returned an error
+        if (updatedTransaction && updatedTransaction.status >= 400) {
+            setError(updatedTransaction.data.error || "Failed to update transaction.");
+        } else {
+            navigate(`/category/${transactionData.category}`); // Only navigate if no error occurs
+        }
     };
 
     useEffect(() => {
-        // create a new async function
+        // Fetch the transaction data by ID and update the form fields
         const fetchTransaction = async () => {
-
-            const expense = await singleTransaction(transactionID);//call get single transaction by id
-            console.log(expense);
-            setTransactionData({
-                name: expense.name,
-                type: expense.type,
-                amount: expense.amount,
-                category: 'Transport',
-            })
+            const expense = await singleTransaction(transactionID);
+            if (expense && expense.status >= 400) {
+                setError(expense.data.error || "Failed to fetch transaction.");
+            } else {
+                setTransactionData({
+                    name: expense.name,
+                    type: expense.type,
+                    amount: expense.amount,
+                    category: expense.category || "Transport",
+                });
+            }
         };
-        // invoke the function
         fetchTransaction();
-    }, []);
+    }, [transactionID]);
 
     return (
-        <main  >
+        <main>
             <form onSubmit={handleSubmitForm}>
-                <h1 /* className={styles.heading} */>Edit transaction</h1>
-                <div /* className={styles.fields} */>
+                <h1>Edit Transaction</h1>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <div>
                     <div>
-                        <label htmlFor="name"> Name</label>
+                        <label htmlFor="name">Name</label>
                         <input
                             id="name"
                             name="name"
@@ -72,9 +72,9 @@ export const TransactionEdit = (user) => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="amount"> Amount</label>
+                        <label htmlFor="amount">Amount</label>
                         <input
-                            type='number'
+                            type="number"
                             id="amount"
                             name="amount"
                             value={transactionData.amount}
@@ -83,21 +83,47 @@ export const TransactionEdit = (user) => {
                         />
                     </div>
                     <div>
-
-                        <label  > Type:  </label>
-                        <input type="radio" id="Expense" name="type" value="Expense" onChange={handleChange} checked={transactionData.type == "Expense" ? 'checked' : ""} />
+                        <label>Type:</label>
+                        <input
+                            type="radio"
+                            id="Expense"
+                            name="type"
+                            value="Expense"
+                            onChange={handleChange}
+                            checked={transactionData.type === "Expense"}
+                        />
                         <label htmlFor="Expense">Expense</label>
-                        <input type="radio" id="Income" name="type" value="Income" onChange={handleChange} checked={transactionData.type == "Expense" ? '' : "checked"} />
+                        <input
+                            type="radio"
+                            id="Income"
+                            name="type"
+                            value="Income"
+                            onChange={handleChange}
+                            checked={transactionData.type === "Income"}
+                        />
                         <label htmlFor="Income">Income</label>
-
                     </div>
                     <div>
-                        <label htmlFor="amount"> Category: to be implemented </label>
-
+                        <label htmlFor="category">Category:</label>
+                        <select
+                            name="category"
+                            id="category"
+                            value={transactionData.category}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="Food">Food</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Gift">Gift</option>
+                            <option value="Health">Health</option>
+                            <option value="Transport">Transport</option>
+                            <option value="None">None</option>
+                        </select>
                     </div>
                 </div>
                 <button type="submit">Edit</button>
             </form>
         </main>
-    )
-}
+    );
+};

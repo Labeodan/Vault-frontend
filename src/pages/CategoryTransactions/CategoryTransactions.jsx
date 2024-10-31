@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as financeService from "../../services/backendConnection";
 import styles from "./CategoryTransactions.module.scss";
 
 const CategoryTransactions = () => {
-    const { categoryName } = useParams(); // Get the category name from the route
+    const { categoryName } = useParams();
     const [transactions, setTransactions] = useState([]);
     const [incomeTransactions, setIncomeTransactions] = useState([]);
     const [expenseTransactions, setExpenseTransactions] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchCategoryTransactions = async () => {
@@ -29,6 +30,22 @@ const CategoryTransactions = () => {
         setExpenseTransactions(expenses);
     }, [transactions]);
 
+    const handleEdit = (transactionId) => {
+        navigate(`/expenses/${transactionId}/edit`)
+        console.log("Edit transaction:", transactionId);
+    };
+
+    const handleDelete = async (transactionId) => {
+        try {
+            await financeService.deleteTransaction(transactionId);
+            setTransactions(prevTransactions =>
+                prevTransactions.filter(transaction => transaction._id !== transactionId)
+            );
+        } catch (error) {
+            console.error("Failed to delete transaction:", error);
+        }
+    };
+
     return (
         <div className={styles.categoryTransactions}>
             <h2>Transactions in {categoryName}</h2>
@@ -38,9 +55,25 @@ const CategoryTransactions = () => {
                 <ul>
                     {incomeTransactions.length > 0 ? (
                         incomeTransactions.map(transaction => (
-                            <li key={transaction._id}>
-                                <h4>{transaction.name}</h4>
-                                <p>Amount: ${transaction.amount.toFixed(2)}</p>
+                            <li key={transaction._id} className={styles.transactionItem}>
+                                <div>
+                                    <h4>{transaction.name}</h4>
+                                    <p>Amount: ${transaction.amount.toFixed(2)}</p>
+                                </div>
+                                <div className={styles.buttonGroup}>
+                                    <button 
+                                        onClick={() => handleEdit(transaction._id)} 
+                                        className={styles.editButton}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(transaction._id)} 
+                                        className={styles.deleteButton}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </li>
                         ))
                     ) : (
@@ -54,9 +87,25 @@ const CategoryTransactions = () => {
                 <ul>
                     {expenseTransactions.length > 0 ? (
                         expenseTransactions.map(transaction => (
-                            <li key={transaction._id}>
-                                <h4>{transaction.name}</h4>
-                                <p>Amount: ${transaction.amount.toFixed(2)}</p>
+                            <li key={transaction._id} className={styles.transactionItem}>
+                                <div>
+                                    <h4>{transaction.name}</h4>
+                                    <p>Amount: ${transaction.amount.toFixed(2)}</p>
+                                </div>
+                                <div className={styles.buttonGroup}>
+                                    <button 
+                                        onClick={() => handleEdit(transaction._id)} 
+                                        className={styles.editButton}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(transaction._id)} 
+                                        className={styles.deleteButton}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </li>
                         ))
                     ) : (

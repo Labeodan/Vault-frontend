@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 const LandingPage = ({user}) => {
   return (
-    <main className={styles.landingPage}>
+    <section className={styles.landingPage}>
       <header className={styles.header}>
         <h1>Welcome to Vault</h1>
         <p>Your personal finance assistant to track expenses, manage income, and set budgets with ease.</p>
@@ -49,7 +49,7 @@ const LandingPage = ({user}) => {
           <div className={styles.chartPlaceholder}><img src={pieChart} alt="Pie Chart" /></div>
         </div>
       </section>
-    </main>
+    </section>
   );
 };
 

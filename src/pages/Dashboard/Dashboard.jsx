@@ -117,7 +117,7 @@ const Dashboard = ({ user }) => {
     };
 
     return (
-        <main className={styles.dashboard}>
+        <section className={styles.dashboard}>
             <header className={styles.header}>
                 <h1>Financial Overview</h1>
             </header>
@@ -126,14 +126,20 @@ const Dashboard = ({ user }) => {
                 <div className={styles.summaryCard}>
                     <h2>Total Expenses</h2>
                     <p className={styles.amount}>${totalExpenses.toFixed(2)}</p>
-                    <button className={styles.button}>New Expense</button>
                 </div>
                 <div className={styles.summaryCard}>
                     <h2>Total Income</h2>
                     <p className={styles.amount}>${totalIncome.toFixed(2)}</p>
-                    <button className={styles.button}>Add Income</button>
                 </div>
             </section>
+
+            {/* Single Add Transaction button */}
+            <div className={styles.addTransactionContainer}>
+                <Link to="/expenses/new">
+                    <button className={styles.button}>Add Transaction</button>
+                </Link>
+            </div>
+
 
                 {/* Budgets Section with Progress */}
                 <section className={styles.budgets}>
@@ -145,14 +151,14 @@ const Dashboard = ({ user }) => {
                             <div key={budget._id} className={styles.budgetCard}>
                                 <h4>{budget.name}</h4>
                                 <p>Target: ${budget.target.toFixed(2)}</p>
-                                <p>Remaining: ${(budget.target - progress).toFixed(2)}</p>
+                                {/* <p>Remaining: ${(budget.target - progress).toFixed(2)}</p> */}
                                 <p>Category: {budget.category.name}</p>
+                                <p>{progress.toFixed(1)}% Used</p>
                                 
                                 {/* Progress bar */}
                                 <div className={styles.progressContainer}>
                                     <div className={styles.progressBar} style={{ width: `${progress}%`, backgroundColor: progress > 100 ? 'red' : '#4caf50' }} />
                                 </div>
-                                <p>{progress.toFixed(1)}% Used</p>
 
                                 <Link to={`/budget/edit/${budget._id}`} className={styles.button}>Edit</Link>
                                 <button 
@@ -184,7 +190,7 @@ const Dashboard = ({ user }) => {
 
             <section className={styles.charts}>
                 <div className={styles.chart}>
-                    <h3>Total Revenue</h3>
+                    <h3>Expense Status</h3>
                     <Pie data={getExpenseStatusData()} />
                 </div>
                 <div className={styles.chart}>
@@ -207,7 +213,7 @@ const Dashboard = ({ user }) => {
                 </div>
             </section>
 
-        </main>
+        </section>
     );
 };
 
