@@ -29,7 +29,7 @@ export const TransactionList = (user) => {
                 {transactions.map((transaction, index) => {
                     //return (<Transaction transaction={transaction}></Transaction>)
                     console.log(transaction);
-                    return (<li><Transaction id={index} transaction={transaction} deleteTransaction={deleteTransaction} /></li>)
+                    return (<li><Transaction key={index} transaction={transaction} deleteTransaction={deleteTransaction} /></li>)
                 })}
             </ul>
         </div>
