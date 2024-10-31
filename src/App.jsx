@@ -19,6 +19,7 @@ import BudgetUpdate from './pages/BudgetUpdate/BudgetUpdate';
 import Dashboard from './pages/Dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
 import CategoryTransactions from './pages/CategoryTransactions/CategoryTransactions';
+import NotFound from './pages/NotFound/NotFound';
 
 const App = () => {
   const [user, setUser] = useState(getUser());
@@ -27,24 +28,37 @@ const App = () => {
   return (<>
     <Header user={user} setUser={setUser}></Header>
     <Routes>
-      {/* User routes */}
-      {/* <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} /> */}
+
       <Route path="/" element={<LandingPage  user={user}/>} />
-      <Route path="/dashboard" element={<Dashboard user={user}/>} />
+      {user 
+      ? (
+        <>
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard user={user}/>} />
+          {/* Transaction routes */}
+          <Route path="/expenses" element={<TransactionList user={user} />} />
+          <Route path="/expenses/new" element={<TransactionForm user={user} />} />
+          <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
+          {/* Budget Routes */}
+          <Route path="/budget/new" element={<BudgetCreate />} />
+          <Route path="/budget/edit/:budgetId" element={<BudgetUpdate />} />
+          {/* categories */}
+          <Route path="/category/:categoryName" element={<CategoryTransactions />} />
+        </>
+      )
+
+      : (
+        <>
+      {/* User routes */}
       <Route path="/auth/signin" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
       <Route path="/auth/signup" element={<SignUp authService={authService} user={user} setUser={setUser} />} />
+        </>
+      )
+      
+      }
 
-      {/* Transaction routes */}
-      <Route path="/expenses" element={<TransactionList user={user} />} />
-      <Route path="/expenses/new" element={<TransactionForm user={user} />} />
-      <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
-
-      {/* Budget Routes */}
-      <Route path="/budget/new" element={<BudgetCreate />} />
-      <Route path="/budget/:budgetId" element={<BudgetUpdate />} />
-
-      {/* categories */}
-      <Route path="/category/:categoryName" element={<CategoryTransactions />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   </>);
 };
