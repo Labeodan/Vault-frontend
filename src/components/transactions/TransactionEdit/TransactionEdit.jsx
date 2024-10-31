@@ -59,7 +59,7 @@ export const TransactionEdit = (user) => {
     return (
         <main  >
             <form onSubmit={handleSubmitForm}>
-                <h1 /* className={styles.heading} */>Add transaction</h1>
+                <h1 /* className={styles.heading} */>Edit transaction</h1>
                 <div /* className={styles.fields} */>
                     <div>
                         <label htmlFor="name"> Name</label>

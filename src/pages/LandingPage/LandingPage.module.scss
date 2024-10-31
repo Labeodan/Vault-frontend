@@ -1,111 +1,149 @@
 .landingPage {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-  
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-  
-      h1 {
-        font-size: 2.5rem;
-        font-weight: bold;
-      }
-  
-      p {
-        font-size: 1.2rem;
-        margin: 10px 0 20px;
-      }
-  
-      .getStartedButton {
-        padding: 10px 20px;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-  
-        &:hover {
-          background-color: #555;
-        }
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 10px 0 20px;
+    }
+
+    .getStartedButton {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #555;
       }
     }
-  
-    .features {
+  }
+
+  .features {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap; // Allows wrapping for smaller screens
+
+    .featureCard {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 30%; // Default width for larger screens
+
+      .chartPlaceholder {
+        background-color: #e0e0e0;
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 0.9rem;
+        margin: auto;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .interactiveDashboards {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .dashboardCharts {
       display: flex;
       gap: 20px;
       justify-content: center;
-      margin-bottom: 40px;
-  
-      .featureCard {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        width: 30%;
+      flex-wrap: wrap; // Allows wrapping for smaller screens
 
-        .chartPlaceholder {
-          background-color: #e0e0e0;
-          width: 150px;
-          height: 150px;
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #999;
-          font-size: 0.9rem;
-          margin: auto;
-
-          img{
-            width: 100%;
-            height: 100%;
-          }
-        }
-  
-        h3 {
-          font-size: 1.5rem;
-          margin-bottom: 10px;
-        }
-  
-        p {
-          font-size: 1rem;
-        }
-      }
-    }
-  
-    .interactiveDashboards {
-      text-align: center;
-      margin-bottom: 40px;
-  
-      h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-      }
-  
-      .dashboardCharts {
+      .chartPlaceholder {
+        background-color: #e0e0e0;
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
         display: flex;
-        gap: 20px;
+        align-items: center;
         justify-content: center;
-  
-        .chartPlaceholder {
-          background-color: #e0e0e0;
-          width: 150px;
-          height: 150px;
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #999;
-          font-size: 0.9rem;
+        color: #999;
+        font-size: 0.9rem;
 
-          img{
-            width: 100%;
-            height: 100%;
-          }
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
     }
-  
-  
   }
-  
+
+  // Media queries for mobile responsiveness
+  @media (max-width: 768px) {
+    padding: 10px;
+
+    .header {
+      h1 {
+        font-size: 2rem; // Smaller heading
+      }
+
+      p {
+        font-size: 1rem; // Smaller paragraph
+      }
+      
+      .getStartedButton {
+        padding: 8px 16px; // Smaller button padding
+      }
+    }
+
+    .features {
+      .featureCard {
+        width: 100%; // Full width on mobile
+        margin-bottom: 20px; // Space between cards
+      }
+    }
+
+    .interactiveDashboards {
+      h2 {
+        font-size: 1.5rem; // Smaller dashboard heading
+      }
+
+      .dashboardCharts {
+        .chartPlaceholder {
+          width: 120px; // Smaller charts on mobile
+          height: 120px;
+        }
+      }
+    }
+  }
+}
