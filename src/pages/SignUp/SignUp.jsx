@@ -22,7 +22,7 @@ export const SignUp = ({ setUser }) => {
             }
             console.log(newUser);
             setUser(newUser.user);
-            navigate("/")
+            navigate("/dashboard")
 
         } catch (error) {
             console.log(error)

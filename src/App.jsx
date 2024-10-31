@@ -18,20 +18,11 @@ import BudgetCreate from './pages/BudgetCreate/BudgetCreate';
 import BudgetUpdate from './pages/BudgetUpdate/BudgetUpdate';
 import Dashboard from './pages/Dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
+import CategoryTransactions from './pages/CategoryTransactions/CategoryTransactions';
 
 const App = () => {
   const [user, setUser] = useState(getUser());
 
-  useEffect(() => {
-    // create a new async function
-    const fetchExpenses = async () => {
-      // call on the index function
-      const expenses = await financeService.index();
-      // Set petList state to the returned pets data
-    };
-    // invoke the function
-
-  }, []);
 
   return (<>
     <Header user={user} setUser={setUser}></Header>
@@ -39,7 +30,7 @@ const App = () => {
       {/* User routes */}
       {/* <Route path='/auth/signout' element={<SignOutElement setUser={setUser} />} /> */}
       <Route path="/" element={<LandingPage  user={user}/>} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard user={user}/>} />
       <Route path="/auth/signin" element={<SignIn authService={authService} user={user} setUser={setUser} />} />
       <Route path="/auth/signup" element={<SignUp authService={authService} user={user} setUser={setUser} />} />
 
@@ -51,6 +42,9 @@ const App = () => {
       {/* Budget Routes */}
       <Route path="/budget/new" element={<BudgetCreate />} />
       <Route path="/budget/:budgetId" element={<BudgetUpdate />} />
+
+      {/* categories */}
+      <Route path="/category/:categoryName" element={<CategoryTransactions />} />
     </Routes>
   </>);
 };
