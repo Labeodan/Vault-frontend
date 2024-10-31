@@ -83,6 +83,7 @@ export const TransactionEdit = (user) => {
                         />
                     </div>
                     <div>
+
                         <label  > Type:  </label>
                         <input type="radio" id="Expense" name="type" value="Expense" onChange={handleChange} checked={transactionData.type == "Expense" ? 'checked' : ""} />
                         <label htmlFor="Expense">Expense</label>

@@ -14,12 +14,14 @@ import { Header } from './components/Header/Header';
 import { TransactionList } from './components/transactions/TransactionList/TransactionList';
 import { TransactionForm } from './components/transactions/TransactionForm/TransactionForm';
 import { TransactionEdit } from './components/transactions/TransactionEdit/TransactionEdit';
+
 import BudgetCreate from './pages/BudgetCreate/BudgetCreate';
 import BudgetUpdate from './pages/BudgetUpdate/BudgetUpdate';
 import Dashboard from './pages/Dashboard/Dashboard';
 import LandingPage from './pages/LandingPage/LandingPage';
 import CategoryTransactions from './pages/CategoryTransactions/CategoryTransactions';
 
+ 
 const App = () => {
   const [user, setUser] = useState(getUser());
 
@@ -38,13 +40,14 @@ const App = () => {
       <Route path="/expenses" element={<TransactionList user={user} />} />
       <Route path="/expenses/new" element={<TransactionForm user={user} />} />
       <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
+      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
+ 
 
       {/* Budget Routes */}
       <Route path="/budget/new" element={<BudgetCreate />} />
       <Route path="/budget/:budgetId" element={<BudgetUpdate />} />
-
-      {/* categories */}
       <Route path="/category/:categoryName" element={<CategoryTransactions />} />
+ 
     </Routes>
   </>);
 };
