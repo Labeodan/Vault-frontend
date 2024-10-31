@@ -36,5 +36,25 @@ const singleTransaction = async (id) => {
     }
 }
 
+const editTransaction = async (id, formData) => {
+    try {
 
-export {  getTransactions, createTransaction };
+        const { data } = await axios.put(`${BASE_URL}/transactions/${id}`, formData);
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const deleteTransaction = async (id) => {
+    try {
+
+        const { data } = await axios.delete(`${BASE_URL}/transactions/${id}`);
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction };

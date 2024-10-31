@@ -6,7 +6,7 @@ export const TransactionForm = (user) => {
         name: '',
         type: "Expense",
         amount: "",
-        category:"Transport",//currently sets transport category by default 
+        category:"Health",//currently sets transport category by default 
         //owner: user.user._id
     });
 

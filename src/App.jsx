@@ -13,6 +13,7 @@ import { SignIn } from './pages/SignIn/SignIn';
 import { Header } from './components/Header/Header';
 import { TransactionList } from './components/transactions/TransactionList/TransactionList';
 import { TransactionForm } from './components/transactions/TransactionForm/TransactionForm';
+import { TransactionEdit } from './components/transactions/TransactionEdit/TransactionEdit';
 import BudgetCreate from './pages/BudgetCreate/BudgetCreate';
 import BudgetUpdate from './pages/BudgetUpdate/BudgetUpdate';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -44,7 +45,8 @@ const App = () => {
 
       {/* Transaction routes */}
       <Route path="/expenses" element={<TransactionList user={user} />} />
-      <Route path="/expenses/new" element={<TransactionForm user={user}/>} />
+      <Route path="/expenses/new" element={<TransactionForm user={user} />} />
+      <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
 
       {/* Budget Routes */}
       <Route path="/budget/new" element={<BudgetCreate />} />
