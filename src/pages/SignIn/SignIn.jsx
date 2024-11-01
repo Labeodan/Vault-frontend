@@ -1,56 +1,48 @@
 import { useState } from 'react';
 import { signIn } from '../../services/authService';
-import styles from './SignIn.module.scss'
-import {Link, useNavigate} from "react-router-dom"
+import styles from './SignIn.module.scss';
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignIn = ({ setUser }) => {
     const [signInData, setSignInData] = useState({
         username: '',
         password: '',
-
     });
-    const navigate = useNavigate()
+    const [error, setError] = useState(''); // Add error state
+    const navigate = useNavigate();
+
     const handleSignin = async () => {
         try {
-            // Call to the sign up service, and log in the user automatically
-            console.dir("handle sign up data " + signInData)
-            console.log(signInData);
             const newUser = await signIn(signInData);
             if (newUser.error) {
                 throw new Error(newUser.error);
             }
-            console.log(newUser);
             setUser(newUser.user);
-            navigate("/dashboard")
-
+            navigate("/dashboard");
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setError(error.message); // Set error message
         }
     };
 
-    // handleChange function to update signInData state
     const handleChange = (evt) => {
-        console.log(signInData);
         setSignInData({ ...signInData, [evt.target.name]: evt.target.value });
     };
 
-
     const handleSubmitForm = (evt) => {
         evt.preventDefault();
+        setError(''); // Clear previous errors before attempting sign-in
         handleSignin();
-        setSignInData({
-             username: '', 
-             password: '', 
-        });
-
+        setSignInData({ username: '', password: '' });
     };
+
     return (
         <main className={styles.container}>
             <form onSubmit={handleSubmitForm}>
                 <h1 className={styles.heading}>Sign In</h1>
                 <div className={styles.fields}>
                     <div>
-                        <label htmlFor="username"> Username</label>
+                        <label htmlFor="username">Username</label>
                         <input
                             id="username"
                             name="username"
@@ -60,9 +52,9 @@ export const SignIn = ({ setUser }) => {
                         /> 
                     </div>
                     <div>
-                        <label htmlFor="password"> Password</label>
+                        <label htmlFor="password">Password</label>
                         <input
-                            type='password'
+                            type="password"
                             id="password"
                             name="password"
                             value={signInData.password}
@@ -72,14 +64,14 @@ export const SignIn = ({ setUser }) => {
                     </div>
                 </div>
 
+                {error && <p className={styles.error}>{error}</p>} {/* Display error if exists */}
 
                 <button type="submit">Sign In</button>
                 <p className={styles.text}>OR</p>
-                <button><Link className={styles.link}
-                to={"/auth/signup"}>Sign Up</Link></button>
-
+                <button>
+                    <Link className={styles.link} to={"/auth/signup"}>Sign Up</Link>
+                </button>
             </form>
         </main>
-
     );
-}
+};
