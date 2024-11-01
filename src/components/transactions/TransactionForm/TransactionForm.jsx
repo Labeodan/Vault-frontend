@@ -9,7 +9,7 @@ export const TransactionForm = (user) => {
         name: '',
         type: "Expense",
         amount: "",
-        category: "Health",//currently sets Health category by default 
+        category: "6720f7e60e6b285143ead898",//currently sets Health category by default 
 
     });
 
