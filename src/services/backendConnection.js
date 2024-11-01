@@ -56,7 +56,23 @@ const deleteTransaction = async (id) => {
         console.log(error);
     }
 }
- 
-export { getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction,getTransactions, createTransaction };
- 
+
+/* Categories queries */
+
+const getAllCategories = async () => {
+    try {
+        const { data } = await axios.get(`${BASE_URL}/category`);
+        return data;
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+export {
+    getTransactions, createTransaction, singleTransaction, editTransaction, deleteTransaction,
+    getAllCategories
+};
+
 

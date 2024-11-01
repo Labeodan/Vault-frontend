@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
-import { createTransaction } from '../../../services/backendConnection';
+import { createTransaction, getAllCategories } from '../../../services/backendConnection';
+import { CategoriesSelect } from '../CategoriesList/CategoriesList';
 export const TransactionForm = (user) => {
 
+    const [categories, setCategories] = useState([]);
     const [transactionData, setTransactionData] = useState({
         name: '',
         type: "Expense",
         amount: "",
-        category:"Health",//currently sets transport category by default 
+        category: "Health",//currently sets transport category by default 
         //owner: user.user._id
     });
 
     const handleChange = (evt) => {
-        console.log(transactionData);
+        console.log("evt.target", evt.target);
         setTransactionData({ ...transactionData, [evt.target.name]: evt.target.value });
     };
     const handleSubmitForm = async (evt) => {
@@ -20,6 +22,18 @@ export const TransactionForm = (user) => {
         const newTransaction = await createTransaction(transactionData);
         console.log(newTransaction);
     };
+
+    useEffect(() => {
+        // create a new async function
+        const fetchCategories = async () => {
+
+            const fetchedCat = await getAllCategories();
+            console.log("categories fetched",fetchedCat);
+            setCategories(fetchedCat)
+        };
+        // invoke the function
+        fetchCategories();
+    }, []);
 
     return (
         <main  >
@@ -49,14 +63,17 @@ export const TransactionForm = (user) => {
                     </div>
                     <div>
                         <label  > Type:  </label>
-                        <input type="radio" id="Expense" name="type" value="Expense" />
+                        <input type="radio" id="Expense" name="type" onChange={handleChange} value="Expense" />
                         <label htmlFor="Expense">Expense</label>
-                        <input type="radio" id="Income" name="type" value="Income" />
+                        <input type="radio" id="Income" name="type" onChange={handleChange} value="Income" />
                         <label htmlFor="Income">Income</label>
 
                     </div>
                     <div>
-                        <label htmlFor="amount"> Category: to be implemented </label>
+                        <label>
+                            Category:
+                            <CategoriesSelect handleChange={handleChange} formData={transactionData} categories={categories} selected={null}></CategoriesSelect>
+                        </label>
 
                     </div>
 
