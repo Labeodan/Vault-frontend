@@ -32,8 +32,8 @@ export const Header = ({ user, setUser }) => {
                     {user ? (
                         <>
                             <li><Link to="/dashboard" onClick={() => setMenuOpen(false)}>Home</Link></li>
-                            <li><Link to="/expenses" onClick={() => setMenuOpen(false)}>Expenses</Link></li>
-                            <li><Link to="/addExpense" onClick={() => setMenuOpen(false)}>Add Expenses</Link></li>
+                            <li><Link to="/expenses" onClick={() => setMenuOpen(false)}>Transactions</Link></li>
+                            <li><Link to="/expenses/new" onClick={() => setMenuOpen(false)}>Add Transaction</Link></li>
                             <li><Link to="/budget/new" onClick={() => setMenuOpen(false)}>Add Budget</Link></li>
                             <li><Link to="/" onClick={() => { handleSignOut(); setMenuOpen(false); }}>Sign Out</Link></li>
                         </>

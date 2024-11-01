@@ -11,8 +11,8 @@ const BudgetForm = () => {
     name: '',
     target: '',
     category: '',
-    startDate: '',
-    endDate: '',
+    startDate: new Date,
+    endDate: new Date,
   });
   const [errors, setErrors] = useState({});
 
@@ -28,8 +28,8 @@ const BudgetForm = () => {
           name: data.name,
           target: data.target,
           category: data.category.name,  // Assumes category is populated with the name
-          startDate: data.startDate,
-          endDate: data.endDate,
+          // startDate: data.startDate,
+          // endDate: data.endDate,
         });
       } catch (error) {
         console.log(error);
@@ -104,7 +104,7 @@ const BudgetForm = () => {
         </select>
         {errors.category && <p className='error'>{errors.category}</p>}
 
-        <label htmlFor="start-date-input">Start Date</label>
+        {/* <label htmlFor="start-date-input">Start Date</label>
         <input
           required
           type="date"
@@ -124,7 +124,7 @@ const BudgetForm = () => {
           value={formData.endDate}
           onChange={handleChange}
         />
-        {errors.endDate && <p className='error'>{errors.endDate}</p>}
+        {errors.endDate && <p className='error'>{errors.endDate}</p>} */}
 
         {/* Generic error message */}
         {errors.errorMessage && <p className='error'>{errors.errorMessage}</p>}
