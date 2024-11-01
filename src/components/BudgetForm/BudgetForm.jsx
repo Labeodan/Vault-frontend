@@ -10,7 +10,7 @@ const BudgetForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     target: '',
-    category: '',
+    category: 'Food',
     startDate: new Date,
     endDate: new Date,
   });
