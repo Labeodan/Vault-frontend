@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard user={user}/>} />
           {/* Transaction routes */}
           <Route path="/expenses" element={<TransactionList user={user} />} />
-          <Route path="/addExpense" element={<TransactionForm user={user} />} />
+          <Route path="/expenses/new" element={<TransactionForm user={user} />} />
           <Route path="/expenses/:transactionId/edit" element={<TransactionEdit user={user} />} />
           {/* Budget Routes */}
           <Route path="/budget/new" element={<BudgetCreate />} />

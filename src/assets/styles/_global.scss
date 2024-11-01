@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
   overflow: hidden;
@@ -16,6 +17,7 @@ html, body {
   --border: rgb(220, 220, 220);
 
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -37,7 +39,10 @@ article img {
 
 // * Typography
 
-h1, h3 { margin: 7px 0px 14px 0px; }
+h1,
+h3 {
+  margin: 7px 0px 14px 0px;
+}
 
 h1 {
   font-size: 28px;
@@ -74,7 +79,8 @@ a {
   color: red;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
 }
 
@@ -153,6 +159,14 @@ form {
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); // Soft shadow for depth
   height: auto; // Removed fixed height for flexibility
 
+  >div {
+    margin-bottom: 25px;
+
+    input {
+      margin: 0 auto;
+    }
+  }
+
   button {
     background-color: #222930; // Accent color for button
     color: #fff;
@@ -163,6 +177,7 @@ form {
     font-weight: bold;
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
+    margin-top: 15px;
 
     &:hover {
       background-color: #1e456f; // Darker shade on hover
@@ -192,6 +207,18 @@ form {
     color: #495057;
     margin-bottom: 4px;
     font-weight: 500;
+
+    display: block;
+
+    input[type=radio] {
+      display: inline;
+      width: auto;
+      margin-left: 5px;
+    }
+
+    select {
+      margin-left: 10px;
+    }
   }
 
   // Adding spacing for each form group
@@ -203,7 +230,3 @@ form {
     align-items: center;
   }
 }
-
-
-
-

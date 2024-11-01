@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as financeService from '../../../services/backendConnection';
 import { Transaction } from '../Transaction/Transaction';
+import styles from "./TransactionList.module.scss";
+
+
 export const TransactionList = (user) => {
     const [transactions, setTransactions] = useState([]);
     useEffect(() => {
@@ -23,7 +26,7 @@ export const TransactionList = (user) => {
     }
 
     return (
-        <div>
+        <div className={styles.listDiv}>
             <h2>Transaction List:</h2>
             <ul>
                 {transactions.map((transaction, index) => {

@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as financeService from "../../services/backendConnection";
 import styles from "./CategoryTransactions.module.scss";
-
+import { Transaction } from "../../components/transactions/Transaction/Transaction";
 const CategoryTransactions = () => {
     const { categoryName } = useParams();
     const [transactions, setTransactions] = useState([]);
@@ -25,7 +25,7 @@ const CategoryTransactions = () => {
     useEffect(() => {
         const incomes = transactions.filter(transaction => transaction.type === "Income");
         const expenses = transactions.filter(transaction => transaction.type === "Expense");
-        
+
         setIncomeTransactions(incomes);
         setExpenseTransactions(expenses);
     }, [transactions]);
@@ -54,28 +54,11 @@ const CategoryTransactions = () => {
                 <h3>Income Transactions</h3>
                 <ul>
                     {incomeTransactions.length > 0 ? (
-                        incomeTransactions.map(transaction => (
-                            <li key={transaction._id} className={styles.transactionItem}>
-                                <div>
-                                    <h4>{transaction.name}</h4>
-                                    <p>Amount: ${transaction.amount.toFixed(2)}</p>
-                                </div>
-                                <div className={styles.buttonGroup}>
-                                    <button 
-                                        onClick={() => handleEdit(transaction._id)} 
-                                        className={styles.editButton}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDelete(transaction._id)} 
-                                        className={styles.deleteButton}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </li>
-                        ))
+                        incomeTransactions.map((transaction, index) => {
+                            //return (<Transaction transaction={transaction}></Transaction>)
+                              return (<li><Transaction key={index} transaction={transaction} deleteTransaction={handleDelete} /></li>)
+         
+                        })
                     ) : (
                         <p>No income transactions found.</p>
                     )}
@@ -86,28 +69,11 @@ const CategoryTransactions = () => {
                 <h3>Expense Transactions</h3>
                 <ul>
                     {expenseTransactions.length > 0 ? (
-                        expenseTransactions.map(transaction => (
-                            <li key={transaction._id} className={styles.transactionItem}>
-                                <div>
-                                    <h4>{transaction.name}</h4>
-                                    <p>Amount: ${transaction.amount.toFixed(2)}</p>
-                                </div>
-                                <div className={styles.buttonGroup}>
-                                    <button 
-                                        onClick={() => handleEdit(transaction._id)} 
-                                        className={styles.editButton}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDelete(transaction._id)} 
-                                        className={styles.deleteButton}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </li>
-                        ))
+                        expenseTransactions.map((transaction, index) => {
+                    //return (<Transaction transaction={transaction}></Transaction>)
+                      return (<li><Transaction key={index} transaction={transaction} deleteTransaction={handleDelete} /></li>)
+ 
+                })
                     ) : (
                         <p>No expense transactions found.</p>
                     )}

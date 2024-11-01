@@ -83,24 +83,26 @@ export const TransactionForm = (user) => {
                     <div>
 
                         <label>Type:</label>
-                        <input
-                            type="radio"
-                            id="Expense"
-                            name="type"
-                            value="Expense"
-                            checked={transactionData.type === "Expense"}
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="Expense">Expense</label>
-                        <input
-                            type="radio"
-                            id="Income"
-                            name="type"
-                            value="Income"
-                            checked={transactionData.type === "Income"}
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="Income">Income</label>
+                        <label htmlFor="Expense">Expense
+                            <input
+                                type="radio"
+                                id="Expense"
+                                name="type"
+                                value="Expense"
+                                checked={transactionData.type === "Expense"}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label htmlFor="Income">Income
+                            <input
+                                type="radio"
+                                id="Income"
+                                name="type"
+                                value="Income"
+                                checked={transactionData.type === "Income"}
+                                onChange={handleChange}
+                            />
+                        </label>
                     </div>
                     <div>
                         <label>
