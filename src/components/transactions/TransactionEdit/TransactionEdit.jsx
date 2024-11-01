@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
-import { editTransaction, singleTransaction } from '../../../services/backendConnection';
+import { useParams,useNavigate } from 'react-router';
+import { editTransaction, singleTransaction, getAllCategories } from '../../../services/backendConnection';
+import { CategoriesSelect } from '../CategoriesList/CategoriesList';
 
-export const TransactionEdit = ({ user }) => {
+export const TransactionEdit = (user) => {
+ 
     const params = useParams();
     const transactionID = params.transactionId;
     const navigate = useNavigate();
 
+    const [categories, setCategories] = useState([]);
     const [transactionData, setTransactionData] = useState({
         name: '',
         type: "Expense",
         amount: "",
-        category: "Transport", // Sets "Transport" as default category
+        category: "",
+  
     });
 
     const [error, setError] = useState(null);
@@ -22,25 +26,43 @@ export const TransactionEdit = ({ user }) => {
 
     const handleSubmitForm = async (evt) => {
         evt.preventDefault();
+         console.log("transaction data", transactionData);
+        setTransactionData({ ...transactionData, owner: user.user._id });
+        const newTransaction = await editTransaction(transactionID, transactionData);
+ 
         setError(null); // Reset error before submission
-
+ 
         const updatedTransaction = await editTransaction(transactionID, {
             ...transactionData,
             owner: user._id,
         });
 
+             const expense = await singleTransaction(transactionID);//call get single transaction by id
+ 
+            console.log(expense);
+            setTransactionData({
+                name: expense.name,
+                type: expense.type,
+                amount: expense.amount,
+                category: expense.category,
+            })
+        };
+        // invoke the function
+        fetchTransaction();
+ 
         // Check if the update request returned an error
         if (updatedTransaction && updatedTransaction.status >= 400) {
             setError(updatedTransaction.data.error || "Failed to update transaction.");
         } else {
             navigate(`/category/${transactionData.category}`); // Only navigate if no error occurs
         }
+ 
     };
 
     useEffect(() => {
         // Fetch the transaction data by ID and update the form fields
         const fetchTransaction = async () => {
-            const expense = await singleTransaction(transactionID);
+             const expense = await singleTransaction(transactionID);
             if (expense && expense.status >= 400) {
                 setError(expense.data.error || "Failed to fetch transaction.");
             } else {
@@ -52,9 +74,19 @@ export const TransactionEdit = ({ user }) => {
                 });
             }
         };
-        fetchTransaction();
-    }, [transactionID]);
+        
 
+        const fetchCategories = async () => {
+            const categories = await getAllCategories();//call get single transaction by id
+            setCategories(categories)
+        };
+
+        // invoke the functions
+         fetchTransaction();
+         fetchCategories();
+
+    }, [transactionID]);
+ 
     return (
         <main>
             <form onSubmit={handleSubmitForm}>
@@ -103,25 +135,16 @@ export const TransactionEdit = ({ user }) => {
                         />
                         <label htmlFor="Income">Income</label>
                     </div>
+
                     <div>
-                        <label htmlFor="category">Category:</label>
-                        <select
-                            name="category"
-                            id="category"
-                            value={transactionData.category}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="Food">Food</option>
-                            <option value="Salary">Salary</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Gift">Gift</option>
-                            <option value="Health">Health</option>
-                            <option value="Transport">Transport</option>
-                            <option value="None">None</option>
-                        </select>
+                        <label>
+                            Category:
+                            <CategoriesSelect handleChange={handleChange} formData={transactionData} categories={categories} selected={transactionData.category.name}></CategoriesSelect>
+                        </label>
+
                     </div>
                 </div>
+
                 <button type="submit">Edit</button>
             </form>
         </main>
