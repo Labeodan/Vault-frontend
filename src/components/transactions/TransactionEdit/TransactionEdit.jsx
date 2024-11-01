@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams,useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { editTransaction, singleTransaction, getAllCategories } from '../../../services/backendConnection';
 import { CategoriesSelect } from '../CategoriesList/CategoriesList';
 
 export const TransactionEdit = (user) => {
- 
+
     const params = useParams();
     const transactionID = params.transactionId;
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const TransactionEdit = (user) => {
         type: "Expense",
         amount: "",
         category: "",
-  
+
     });
 
     const [error, setError] = useState(null);
@@ -26,43 +26,42 @@ export const TransactionEdit = (user) => {
 
     const handleSubmitForm = async (evt) => {
         evt.preventDefault();
-         console.log("transaction data", transactionData);
+        console.log("transaction data", transactionData);
         setTransactionData({ ...transactionData, owner: user.user._id });
         const newTransaction = await editTransaction(transactionID, transactionData);
- 
+
         setError(null); // Reset error before submission
- 
+
         const updatedTransaction = await editTransaction(transactionID, {
             ...transactionData,
             owner: user._id,
         });
 
-             const expense = await singleTransaction(transactionID);//call get single transaction by id
- 
-            console.log(expense);
-            setTransactionData({
-                name: expense.name,
-                type: expense.type,
-                amount: expense.amount,
-                category: expense.category,
-            })
-        };
-        // invoke the function
-        fetchTransaction();
- 
+        const expense = await singleTransaction(transactionID);//call get single transaction by id
+        console.log("single transaction data", expense);
+        setTransactionData({
+            name: expense.name,
+            type: expense.type,
+            amount: expense.amount,
+            category: expense.category.name,
+        })
+
         // Check if the update request returned an error
         if (updatedTransaction && updatedTransaction.status >= 400) {
             setError(updatedTransaction.data.error || "Failed to update transaction.");
         } else {
-            navigate(`/category/${transactionData.category}`); // Only navigate if no error occurs
+            navigate(`/category/${expense.category.name}`); // Only navigate if no error occurs
         }
- 
+
     };
+
+
+
 
     useEffect(() => {
         // Fetch the transaction data by ID and update the form fields
         const fetchTransaction = async () => {
-             const expense = await singleTransaction(transactionID);
+            const expense = await singleTransaction(transactionID);
             if (expense && expense.status >= 400) {
                 setError(expense.data.error || "Failed to fetch transaction.");
             } else {
@@ -74,19 +73,19 @@ export const TransactionEdit = (user) => {
                 });
             }
         };
-        
+
 
         const fetchCategories = async () => {
             const categories = await getAllCategories();//call get single transaction by id
             setCategories(categories)
         };
 
-        // invoke the functions
-         fetchTransaction();
-         fetchCategories();
+        // invoke the function
+        fetchTransaction();
+        fetchCategories();
 
     }, [transactionID]);
- 
+
     return (
         <main>
             <form onSubmit={handleSubmitForm}>
