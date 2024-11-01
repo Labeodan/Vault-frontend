@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import { createTransaction } from '../../../services/backendConnection';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { createTransaction, getAllCategories } from '../../../services/backendConnection';
+import { CategoriesSelect } from '../CategoriesList/CategoriesList';
+export const TransactionForm = (user) => {
 
-export const TransactionForm = ({ user }) => {
+    const [categories, setCategories] = useState([]);
     const [transactionData, setTransactionData] = useState({
         name: '',
-        type: 'Expense',
-        amount: '',
-        category: 'Health', // Sets Health category by default 
+        type: "Expense",
+        amount: "",
+        category: "Health",//currently sets Health category by default 
+
     });
 
     const [error, setError] = useState(null); // State to hold error message
@@ -20,12 +23,12 @@ export const TransactionForm = ({ user }) => {
     const handleSubmitForm = async (evt) => {
         evt.preventDefault();
         setError(null); // Reset error before new submission
-    
+
         const newTransaction = await createTransaction({
             ...transactionData,
             owner: user._id, // Add owner directly to the transaction data
         });
-    
+
         // Check if the transaction creation failed
         if (newTransaction && newTransaction.status >= 400) {
             setError(newTransaction.data.error || "Failed to create transaction.");
@@ -33,13 +36,25 @@ export const TransactionForm = ({ user }) => {
             navigate("/dashboard"); // Only navigate if no error occurs
         }
     };
-    
+
+
+    useEffect(() => {
+        // create a new async function
+        const fetchCategories = async () => {
+
+            const fetchedCat = await getAllCategories();
+            console.log("categories fetched", fetchedCat);
+            setCategories(fetchedCat)
+        };
+        // invoke the function
+        fetchCategories();
+    }, []);
 
     return (
         <main>
             <form onSubmit={handleSubmitForm}>
                 <h1>Add Transaction</h1>
-                
+
                 {/* Show error message if there's an error */}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -66,6 +81,7 @@ export const TransactionForm = ({ user }) => {
                         />
                     </div>
                     <div>
+
                         <label>Type:</label>
                         <input
                             type="radio"
@@ -87,22 +103,12 @@ export const TransactionForm = ({ user }) => {
                         <label htmlFor="Income">Income</label>
                     </div>
                     <div>
-                        <label htmlFor="category">Category:</label>
-                        <select
-                            required
-                            name="category"
-                            id="category-input"
-                            value={transactionData.category}
-                            onChange={handleChange}
-                        >
-                            <option value="Food">Food</option>
-                            <option value="Salary">Salary</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Gifts">Gifts</option>
-                            <option value="Health">Health</option>
-                            <option value="Transport">Transport</option>
-                            {/* <option value="None">None</option> */}
-                        </select>
+                        <label>
+                            Category:
+                            <CategoriesSelect handleChange={handleChange} formData={transactionData} categories={categories} selected={null}></CategoriesSelect>
+                        </label>
+
+
                     </div>
                 </div>
 
